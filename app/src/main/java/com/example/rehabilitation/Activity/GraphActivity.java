@@ -1,6 +1,4 @@
-package com.example.rehabilitation;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.rehabilitation.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -8,10 +6,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.rehabilitation.Data.RecordValue;
+import com.example.rehabilitation.R;
 import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
@@ -30,7 +33,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Locale;
 
 public class GraphActivity extends AppCompatActivity {
     private GraphView graphView;
@@ -41,7 +43,7 @@ public class GraphActivity extends AppCompatActivity {
     SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
     private static final String url_getAllValues = MainActivity.ipBaseAddress + "/get_user_record_values.php";
     private LineGraphSeries<DataPoint> series;
-
+    private Button btnBack;
     private ArrayList<RecordValue> valuesArr;
     Date time;
 
@@ -55,7 +57,7 @@ public class GraphActivity extends AppCompatActivity {
 
         this.graphView = (GraphView) findViewById(R.id.graphView);
         this.recID=intent.getStringExtra("recID");
-
+        this.btnBack= (Button) findViewById(R.id.btnBack);
         ArrayList<String> listItem = new ArrayList<String>();
         final ArrayList<String> listID = new ArrayList<>();
         final ArrayList<String> listValue = new ArrayList<>();
@@ -71,6 +73,13 @@ public class GraphActivity extends AppCompatActivity {
 
         listView.setAdapter(adapter);
         getJSON(url_getAllValues);
+
+        this.btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
     }
 

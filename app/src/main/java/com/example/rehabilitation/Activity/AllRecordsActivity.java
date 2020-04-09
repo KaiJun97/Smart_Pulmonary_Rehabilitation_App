@@ -1,6 +1,4 @@
-package com.example.rehabilitation;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.rehabilitation.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -13,7 +11,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.rehabilitation.Data.JSONParser;
+import com.example.rehabilitation.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;

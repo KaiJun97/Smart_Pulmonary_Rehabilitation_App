@@ -1,6 +1,5 @@
-package com.example.rehabilitation;
+package com.example.rehabilitation.Activity;
 
-import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,16 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-//import com.android.volley.Request;
-//import com.android.volley.RequestQueue;
-//import com.android.volley.Response;
-//import com.android.volley.VolleyError;
-//import com.android.volley.toolbox.JsonObjectRequest;
-//import com.android.volley.toolbox.Volley;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,6 +16,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.rehabilitation.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 
@@ -131,9 +124,6 @@ public class SignUpActivity extends AppCompatActivity {
             if (response.getInt(TAG_SUCCESS) == 1) {
 
                 finish();
-//                Intent i = new Intent(SignUpActivity.this, LoginActivity.class);
-//                startActivity(i);
-
 
             } else {
                 Toast.makeText(this, "Wrong Password", Toast.LENGTH_SHORT).show();

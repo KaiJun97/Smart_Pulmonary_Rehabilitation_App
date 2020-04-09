@@ -1,7 +1,4 @@
-package com.example.rehabilitation;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.FileProvider;
+package com.example.rehabilitation.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -10,13 +7,16 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
+
+import com.example.rehabilitation.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,7 +30,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 
 public class ExportDataActivity extends AppCompatActivity {
     private ListView listView;

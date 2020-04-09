@@ -1,8 +1,4 @@
-package com.example.rehabilitation;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+package com.example.rehabilitation.Activity;
 
 import android.Manifest;
 import android.app.Dialog;
@@ -23,7 +19,6 @@ import android.bluetooth.le.ScanSettings;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -37,7 +32,12 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.example.rehabilitation.Data.BleGattService;
+import com.example.rehabilitation.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -123,7 +123,7 @@ public class PlayActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(bleGatt!=null) {
 
-                    Intent intent = new Intent(PlayActivity.this, TestActivity.class);
+                    Intent intent = new Intent(PlayActivity.this, SelectGameActivity.class);
 
 
                     getRecords(url_setUserRecord);
@@ -144,7 +144,7 @@ public class PlayActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startScan();
-                Dialog d = new Dialog(PlayActivity.this); //open up dialog box with listview
+                final Dialog d = new Dialog(PlayActivity.this); //open up dialog box with listview
                 d.setContentView(R.layout.bluetooth_device);
                 d.setTitle("Devices");
                 d.show();
@@ -163,7 +163,8 @@ public class PlayActivity extends AppCompatActivity {
                         ble = new BleGattService();
                         bleGatt=device.getDevice().connectGatt(getApplicationContext(), false, bleGattCallback);
                         ble.setBleGatt(bleGatt);
-
+                        //finish();
+                        d.cancel();
                     }
                 });
 
@@ -247,7 +248,7 @@ public class PlayActivity extends AppCompatActivity {
         records = new String[jsonArray.length()];
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject obj = jsonArray.getJSONObject(i);
-           // recordID.add(""+obj.getString("recId"));
+            // recordID.add(""+obj.getString("recId"));
             records[i] = obj.getString("recId");
         }
         Log.e("Record ID", records[records.length-1]);
@@ -255,12 +256,12 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     public void checkPermission(){
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
         ){//Can add more as per requirement
 
             ActivityCompat.requestPermissions(this,
-                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
                     123);
         }
     }

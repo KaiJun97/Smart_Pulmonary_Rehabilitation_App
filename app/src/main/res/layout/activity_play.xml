@@ -7,7 +7,7 @@
     android:orientation="vertical"
 
 
-    tools:context=".LoginActivity">
+    tools:context=".Activity.LoginActivity">
 
     <Button
         android:id="@+id/btnPlay"

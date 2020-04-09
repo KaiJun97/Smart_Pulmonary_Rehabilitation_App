@@ -1,14 +1,15 @@
- package com.example.rehabilitation;
+ package com.example.rehabilitation.Activity;
 
-import androidx.appcompat.app.AppCompatActivity;
+ import android.content.Intent;
+ import android.os.Bundle;
+ import android.view.View;
+ import android.widget.Button;
+ import android.widget.TextView;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+ import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.rehabilitation.Data.User;
+ import com.example.rehabilitation.Data.User;
+ import com.example.rehabilitation.R;
 
  public class MainActivity extends AppCompatActivity {
     //public static String ipBaseAddress = "http://192.168.1.11/asp";

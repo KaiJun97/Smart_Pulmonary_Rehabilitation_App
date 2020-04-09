@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    tools:context=".AllRecordsActivity">
+    tools:context=".Activity.AllRecordsActivity">
 
     <ListView
         android:id="@+id/list"
@@ -23,12 +23,12 @@
 
     <Button
         android:id="@+id/btnBack"
-        android:layout_width="wrap_content"
+        android:layout_width="240dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="145dp"
+        android:layout_marginStart="65dp"
         android:layout_marginBottom="80dp"
         android:text="Back" />
 </RelativeLayout>
