@@ -1,5 +1,6 @@
 package com.example.rehabilitation.Activity;
 
+import android.app.ProgressDialog;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,6 +31,7 @@ public class SignUpActivity extends AppCompatActivity {
     private static final String url_Signup = MainActivity.ipBaseAddress+"/SignUpJ.php";
     private static final String TAG_SUCCESS = "success";
     private  HashMap<String, String> params;
+    private ProgressDialog pDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +60,11 @@ public class SignUpActivity extends AppCompatActivity {
                 String username = etusername.getText().toString();
                 String password = etpassword.getText().toString();
                 String passwordConfirm = etpasswordConfirm.getText().toString();
+                pDialog = new ProgressDialog(SignUpActivity.this);
+                pDialog.setMessage("Signing Up...");
+                pDialog.setIndeterminate(false);
+                pDialog.setCancelable(true);
+                pDialog.show();
 
                 if (username.isEmpty()) {
                     etusername.setError(getResources().getString(R.string.error_field_required));
@@ -122,11 +129,12 @@ public class SignUpActivity extends AppCompatActivity {
         Log.i("----Response", response + " " + url_Signup);
         try {
             if (response.getInt(TAG_SUCCESS) == 1) {
-
+                pDialog.dismiss();
                 finish();
 
             } else {
-                Toast.makeText(this, "Wrong Password", Toast.LENGTH_SHORT).show();
+                pDialog.dismiss();
+                Toast.makeText(this, "Invalid Username", Toast.LENGTH_SHORT).show();
             }
 
         } catch (JSONException e) {
