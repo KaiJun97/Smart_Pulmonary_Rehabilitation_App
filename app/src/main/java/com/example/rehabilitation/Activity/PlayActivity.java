@@ -163,7 +163,6 @@ public class PlayActivity extends AppCompatActivity {
                         ble = new BleGattService();
                         bleGatt=device.getDevice().connectGatt(getApplicationContext(), false, bleGattCallback);
                         ble.setBleGatt(bleGatt);
-                        //finish();
                         d.cancel();
                     }
                 });
@@ -225,7 +224,7 @@ public class PlayActivity extends AppCompatActivity {
             protected String doInBackground(Void... voids) {
                 try {
 
-                    URL url = new URL(urlWebService+ ("?username=" + MainActivity.username));
+                    URL url = new URL(urlWebService+ ("?username=" + MainActivity.username)+("&uId="+MainActivity.uId));
                     HttpURLConnection con = (HttpURLConnection) url.openConnection();
                     StringBuilder sb = new StringBuilder();
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));

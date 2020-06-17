@@ -43,6 +43,8 @@ public class ExportDataActivity extends AppCompatActivity {
     private static final String url_getAllRecords = MainActivity.ipBaseAddress+"/get_user_records.php";
     private static final String url_getAllValues = MainActivity.ipBaseAddress + "/get_user_record_values.php";
     private ArrayList<String> listID= new ArrayList<>();
+    private int uId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +61,7 @@ public class ExportDataActivity extends AppCompatActivity {
         });
 
         this.username= MainActivity.username;
+        this.uId=MainActivity.uId;
 
         ArrayList<String> listItem= new ArrayList<String>();
         final ArrayList<String> listUsername = new ArrayList<>();
@@ -117,7 +120,7 @@ public class ExportDataActivity extends AppCompatActivity {
             protected String doInBackground(Void... voids) {
                 try {
 
-                    URL url = new URL(urlWebService+ ("?username=" + username));
+                    URL url = new URL(urlWebService+ ("?username=" + username)+("&uId="+uId));
                     HttpURLConnection con = (HttpURLConnection) url.openConnection();
                     StringBuilder sb = new StringBuilder();
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
@@ -140,7 +143,7 @@ public class ExportDataActivity extends AppCompatActivity {
         String[] records = new String[jsonArray.length()];
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject obj = jsonArray.getJSONObject(i);
-            records[i] = "Username: "+obj.getString("name")+"\n"+"Record ID: "+obj.getString("recId");
+            records[i] = "User ID:"+obj.getInt("uId")+"\n"+"Username: "+obj.getString("name")+"\n"+"Record ID: "+obj.getString("recId")+"\n"+"Date: "+obj.getString("date");
             listID.add(""+obj.getString("recId"));
         }
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, records);

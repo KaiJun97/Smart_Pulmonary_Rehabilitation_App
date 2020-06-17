@@ -38,6 +38,8 @@ public class AllRecordsActivity extends AppCompatActivity {
     private static final String TAG_PID = "recId";
     private ArrayList<String> recordID = new ArrayList<>();
     private static final String url_getAllRecords = MainActivity.ipBaseAddress+"/get_user_records.php";
+    private int uId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +47,7 @@ public class AllRecordsActivity extends AppCompatActivity {
         JSONParser jParser = new JSONParser();
         final ArrayList<HashMap<String, String>> recordsList;
         this.username= MainActivity.username;
+        this.uId=MainActivity.uId;
 
         ArrayList<String> listItem= new ArrayList<String>();
 
@@ -119,7 +122,7 @@ public class AllRecordsActivity extends AppCompatActivity {
             protected String doInBackground(Void... voids) {
                 try {
 
-                    URL url = new URL(urlWebService+ ("?username=" + username));
+                    URL url = new URL(urlWebService+ ("?username=" + username)+("&uId="+uId));
                     HttpURLConnection con = (HttpURLConnection) url.openConnection();
                     StringBuilder sb = new StringBuilder();
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
@@ -143,7 +146,7 @@ public class AllRecordsActivity extends AppCompatActivity {
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject obj = jsonArray.getJSONObject(i);
             recordID.add(""+obj.getString("recId"));
-            records[i] = "Username: "+obj.getString("name")+"\n"+"Record ID: "+obj.getString("recId");
+            records[i] = "User ID:"+obj.getInt("uId")+"\n"+"Username: "+obj.getString("name")+"\n"+"Record ID: "+obj.getString("recId")+"\n"+"Date: "+obj.getString("date");
         }
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, records);
         pDialog.dismiss();

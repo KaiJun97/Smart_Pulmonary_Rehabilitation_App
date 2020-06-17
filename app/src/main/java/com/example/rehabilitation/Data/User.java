@@ -3,6 +3,16 @@ package com.example.rehabilitation.Data;
 public class User {
     private String username,firstName,lastName;
 
+    public int getuId() {
+        return uId;
+    }
+
+    public void setuId(int uId) {
+        this.uId = uId;
+    }
+
+    private int uId;
+
     public User(String username, String firstName, String lastName){
         this.username=username;
         this.firstName=firstName;
@@ -10,7 +20,7 @@ public class User {
     }
 
     public void setUsername(String username) {
-        username = username;
+        this.username = username;
     }
 
     public String getUsername() {
@@ -18,8 +28,9 @@ public class User {
     }
 
 
-    public User(String username){
+    public User(String username, int uId ){
         this.username=username;
+        this.uId=uId;
     }
 
     public String getLastName() {

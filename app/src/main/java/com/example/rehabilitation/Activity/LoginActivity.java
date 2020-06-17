@@ -157,7 +157,8 @@ public class LoginActivity extends AppCompatActivity {
                 //new DataRequest().logInFunction(usernameEditText.getText().toString());
                 Intent i = new Intent(this, MainActivity.class);
                 i.putExtra("Username", usernameEditText.getText().toString());
-                Toast.makeText(this, "Welcome "+usernameEditText.getText().toString(),Toast.LENGTH_SHORT).show();
+                i.putExtra("uId",response.getInt("uId"));
+                Toast.makeText(this, "Welcome "+usernameEditText.getText().toString()+" User ID: "+response.getInt("uId"),Toast.LENGTH_SHORT).show();
                 startActivity(i);
 
 

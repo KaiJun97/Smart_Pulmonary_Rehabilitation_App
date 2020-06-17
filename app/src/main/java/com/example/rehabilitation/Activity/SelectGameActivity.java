@@ -27,5 +27,12 @@ public class SelectGameActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        this.btnMusic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SelectGameActivity.this, TestActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

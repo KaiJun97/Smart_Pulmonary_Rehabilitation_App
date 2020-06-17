@@ -17,6 +17,7 @@
      private TextView txtName;
      private Button btnPlay, btnShowData, btnExportData;
     public static String username;
+    public static int uId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +28,8 @@
         this.btnExportData=(Button) findViewById(R.id.btnExport);
         Intent intent= getIntent();
         this.username= intent.getStringExtra("Username");
-        final User user= new User(this.username);
+        this.uId=intent.getIntExtra("uId",0);
+        final User user= new User(this.username,this.uId);
         this.txtName.post(new Runnable() {
             public void run() {
                 txtName.setText(user.getUsername());
