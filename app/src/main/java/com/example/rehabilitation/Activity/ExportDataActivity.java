@@ -4,6 +4,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -70,6 +72,8 @@ public class ExportDataActivity extends AppCompatActivity {
 
         //recordsList = new ArrayList<HashMap<String, String>>();
         pDialog = new ProgressDialog(this);
+        pDialog = new ProgressDialog(ExportDataActivity.this,R.style.AppCompatAlertDialogStyle);
+        pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         pDialog.setMessage("Loading records ...");
         pDialog.setIndeterminate(false);
         pDialog.setCancelable(true);
@@ -143,7 +147,7 @@ public class ExportDataActivity extends AppCompatActivity {
         String[] records = new String[jsonArray.length()];
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject obj = jsonArray.getJSONObject(i);
-            records[i] = "User ID:"+obj.getInt("uId")+"\n"+"Username: "+obj.getString("name")+"\n"+"Record ID: "+obj.getString("recId")+"\n"+"Date: "+obj.getString("date");
+            records[i] = "User ID:"+obj.getInt("uId")+"\n"+"Username: "+obj.getString("name")+"\n"+"Record ID: "+obj.getString("recId")+"\n"+"Date: "+obj.getString("date")+"\n"+"Game: "+obj.getString("game");
             listID.add(""+obj.getString("recId"));
         }
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, records);

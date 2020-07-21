@@ -4,57 +4,76 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
+    android:visibility="visible"
     tools:context=".Activity.MainActivity">
 
     <Button
         android:id="@+id/btnShowData"
         style="@style/Widget.AppCompat.Button"
         android:layout_width="271dp"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
+        android:layout_above="@+id/btnExport"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="67dp"
-        android:layout_marginEnd="73dp"
-        android:layout_marginBottom="363dp"
-
+        android:layout_marginStart="71dp"
+        android:background="@drawable/rounded_corners_button"
+        android:layout_marginEnd="69dp"
+        android:layout_marginBottom="50dp"
         android:text="Show Data" />
 
     <Button
         android:id="@+id/btnPlay"
         style="@style/Widget.AppCompat.Button"
         android:layout_width="268dp"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
+        android:layout_above="@+id/btnShowData"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="71dp"
-        android:layout_marginEnd="72dp"
-        android:layout_marginBottom="454dp"
-        android:text="Play Game" />
+        android:layout_marginEnd="71dp"
+        android:layout_marginBottom="50dp"
+        android:text="Play Game"
+        android:background="@drawable/rounded_corners_button"/>
 
     <TextView
         android:id="@+id/txtName"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:layout_below="@+id/txtWelcome"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="5dp"
+        android:textAlignment="center"
         android:textSize="40sp"
-        android:textAlignment="center" />
+        android:textStyle="bold"
+        android:textColor="@color/textColor" />
 
     <Button
         android:id="@+id/btnExport"
         android:layout_width="272dp"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="69dp"
         android:layout_marginEnd="70dp"
-        android:layout_marginBottom="261dp"
-        android:text="Export Data to CSV file" />
+        android:layout_marginBottom="80dp"
+        android:text="Export Data to CSV file"
+        android:background="@drawable/rounded_corners_button"/>
+
+    <TextView
+        android:id="@+id/txtWelcome"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="5dp"
+        android:text="@string/welcome_back"
+        android:textAlignment="center"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:textColor="@color/textColor"/>
 
 </RelativeLayout>

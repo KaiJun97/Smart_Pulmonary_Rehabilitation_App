@@ -1,4 +1,4 @@
-package com.example.rehabilitation.Game;
+package com.example.rehabilitation.Flappy;
 
 public class BackgroundImage {
 

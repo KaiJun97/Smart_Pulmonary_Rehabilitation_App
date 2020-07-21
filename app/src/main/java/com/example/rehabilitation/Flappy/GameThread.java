@@ -1,4 +1,4 @@
-package com.example.rehabilitation.Game;
+package com.example.rehabilitation.Flappy;
 
 import android.graphics.Canvas;
 import android.os.SystemClock;

@@ -7,8 +7,8 @@ import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
 
-import com.example.rehabilitation.Game.AppConstants;
-import com.example.rehabilitation.Game.GameView;
+import com.example.rehabilitation.Flappy.AppConstants;
+import com.example.rehabilitation.Flappy.GameView;
 
 public class GameActivity extends Activity {
 

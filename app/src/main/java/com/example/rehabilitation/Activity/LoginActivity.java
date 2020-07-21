@@ -2,12 +2,17 @@ package com.example.rehabilitation.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -33,6 +38,8 @@ public class LoginActivity extends AppCompatActivity {
     private EditText usernameEditText,passwordEditText;
     private Button btnLogin,btnSignup;
     private ProgressBar loadingProgressBar;
+    private Animation smallToBig, btta, btta2;
+    private ImageView imgLogo;
     private static final int PERMISSION_INTERNET = 1;
     private static final int PERMISSION_ACCESS_NETWORK_STATE = 2;
     private ProgressDialog pDialog;
@@ -43,18 +50,24 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_login);
 
-
-
-
-
+        this.smallToBig= AnimationUtils.loadAnimation(this, R.anim.smalltobig);
+        this.btta= AnimationUtils.loadAnimation(this, R.anim.btta);
+        this.btta2= AnimationUtils.loadAnimation(this, R.anim.btta2);
+        this.imgLogo= findViewById(R.id.imgLogo);
         this.usernameEditText = findViewById(R.id.username);
         this.passwordEditText = findViewById(R.id.password);
         this.btnLogin = findViewById(R.id.btnLogin);
         this.btnSignup= findViewById(R.id.btnSignup);
         this.loadingProgressBar = findViewById(R.id.loading);
 
+        this.imgLogo.startAnimation(this.smallToBig);
+        this.usernameEditText.startAnimation(this.btta);
+        this.passwordEditText.startAnimation(this.btta);
+        this.btnLogin.startAnimation(this.btta2);
+        this.btnSignup.startAnimation(this.btta2);
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,7 +84,8 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String pw= passwordEditText.getText().toString();
                 String uName= usernameEditText.getText().toString();
-                pDialog = new ProgressDialog(LoginActivity.this);
+                pDialog = new ProgressDialog(LoginActivity.this,R.style.AppCompatAlertDialogStyle);
+                pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 pDialog.setMessage("Signing in");
                 pDialog.setIndeterminate(false);
                 pDialog.setCancelable(true);

@@ -2,6 +2,8 @@ package com.example.rehabilitation.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -57,6 +59,8 @@ public class AllRecordsActivity extends AppCompatActivity {
 
         recordsList = new ArrayList<HashMap<String, String>>();
         pDialog = new ProgressDialog(this);
+        pDialog = new ProgressDialog(AllRecordsActivity.this,R.style.AppCompatAlertDialogStyle);
+        pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         pDialog.setMessage("Loading records ...");
         pDialog.setIndeterminate(false);
         pDialog.setCancelable(true);
@@ -80,6 +84,7 @@ public class AllRecordsActivity extends AppCompatActivity {
                 String recID = String.valueOf(recordID.get(recordPosition));
                 Intent intent= new Intent(AllRecordsActivity.this, GraphActivity.class);
                 intent.putExtra("recID",recID);
+
                 startActivity(intent);
 
             }
@@ -146,7 +151,7 @@ public class AllRecordsActivity extends AppCompatActivity {
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject obj = jsonArray.getJSONObject(i);
             recordID.add(""+obj.getString("recId"));
-            records[i] = "User ID:"+obj.getInt("uId")+"\n"+"Username: "+obj.getString("name")+"\n"+"Record ID: "+obj.getString("recId")+"\n"+"Date: "+obj.getString("date");
+            records[i] = "User ID:"+obj.getInt("uId")+"\n"+"Username: "+obj.getString("name")+"\n"+"Record ID: "+obj.getString("recId")+"\n"+"Date: "+obj.getString("date")+"\n"+"Game: "+obj.getString("game");
         }
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, records);
         pDialog.dismiss();

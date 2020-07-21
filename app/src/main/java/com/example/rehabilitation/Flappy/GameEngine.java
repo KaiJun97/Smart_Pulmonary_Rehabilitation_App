@@ -1,4 +1,4 @@
-package com.example.rehabilitation.Game;
+package com.example.rehabilitation.Flappy;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothGatt;
@@ -9,10 +9,13 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.Log;
 
+import com.example.rehabilitation.Activity.SelectGameActivity;
+
 import java.util.ArrayList;
 import java.util.Random;
 
-import static com.example.rehabilitation.Game.MainGame.jump;
+import static com.example.rehabilitation.Activity.SelectGameActivity.jump;
+import static com.example.rehabilitation.Flappy.MainGame.jump;
 
 public class GameEngine {
 
@@ -75,7 +78,7 @@ public class GameEngine {
                 Context context = AppConstants.gameActivityContext;
                 Intent intent = new Intent(context, GameOver.class);
                 intent.putExtra("score", score);
-                MainGame.bleGatt.close();
+                SelectGameActivity.bleGatt.close();
                 context.startActivity(intent);
                 ((Activity) context).finish();
             } else if (tubes.get(scoringTube).getTubeX() < bird.getX() - AppConstants.getBitmapBank().getTubeWidth()) {

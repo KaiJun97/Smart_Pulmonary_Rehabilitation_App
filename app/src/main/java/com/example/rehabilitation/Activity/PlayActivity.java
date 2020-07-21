@@ -45,6 +45,7 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.ByteBuffer;
@@ -83,7 +84,7 @@ public class PlayActivity extends AppCompatActivity {
 
     private Intent intent;
 
-    public static String recId;
+
 
     private ListView bluetoothList;
 
@@ -108,6 +109,21 @@ public class PlayActivity extends AppCompatActivity {
         }
         BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         bluetoothAdapter = bluetoothManager.getAdapter();
+
+        if(bleGatt!=null) {
+            Toast.makeText(getApplicationContext(),"Your device is already connected", Toast.LENGTH_LONG).show();
+        }
+        else {
+            startScan();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    stopScan();
+                    connectToBLE();
+                }
+            },3000);
+        }
+
         this.btnConnect = (Button) findViewById(R.id.connect);
         this.btnBack=(Button) findViewById(R.id.btnBack);
         this.btnPlay=(Button) findViewById(R.id.btnPlay);
@@ -126,10 +142,10 @@ public class PlayActivity extends AppCompatActivity {
                     Intent intent = new Intent(PlayActivity.this, SelectGameActivity.class);
 
 
-                    getRecords(url_setUserRecord);
+//                    getRecords(url_setUserRecord);
 
 
-//                    intent.putExtra("ID", recId);
+                    //  intent.putExtra("ID", recId);
                     startActivity(intent);
 
                 }
@@ -184,75 +200,86 @@ public class PlayActivity extends AppCompatActivity {
                         },3000);
                     }
                 });
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        stopScan();
-                    }
-                },3000);
             }
         });
     }
+    private void connectToBLE(){
+        String devName = "ASP_Project";
+        for(int i=0; i< deviceList.size();i++){
+            Log.e("device list", String.valueOf(deviceList.get(i)));
+            if(String.valueOf(deviceList.get(i)).equals(devName)){
+                Log.e("check", "true");
+                device = results.get(i);
+                Toast.makeText(getApplicationContext(), device.getDevice().getName(), Toast.LENGTH_LONG).show();
+
+                ble = new BleGattService();
+                bleGatt=device.getDevice().connectGatt(getApplicationContext(), false, bleGattCallback);
+                ble.setBleGatt(bleGatt);
 
 
-    private void getRecords(final String urlWebService) {
-
-        class GetJSON extends AsyncTask<Void, Void, String> {
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-            }
-
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                Log.e("String", s);
-                //Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
-                try {
-
-                    recId= storeRecords(s);
-                    Log.e("message id ", recId);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            protected String doInBackground(Void... voids) {
-                try {
-
-                    URL url = new URL(urlWebService+ ("?username=" + MainActivity.username)+("&uId="+MainActivity.uId));
-                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                    StringBuilder sb = new StringBuilder();
-                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                    String json;
-                    while ((json = bufferedReader.readLine()) != null) {
-                        sb.append(json + "\n");
-                    }
-                    return sb.toString().trim();
-                } catch (Exception e) {
-                    return null;
-                }
             }
         }
-        GetJSON getJSON = new GetJSON();
-        getJSON.execute();
     }
 
-    private String storeRecords(String json) throws JSONException {
-        JSONArray jsonArray = new JSONArray(json);
-        records = new String[jsonArray.length()];
-        for (int i = 0; i < jsonArray.length(); i++) {
-            JSONObject obj = jsonArray.getJSONObject(i);
-            // recordID.add(""+obj.getString("recId"));
-            records[i] = obj.getString("recId");
-        }
-        Log.e("Record ID", records[records.length-1]);
-        return records[records.length-1];
-    }
+
+//    private void getRecords(final String urlWebService) {
+//
+//        class GetJSON extends AsyncTask<Void, Void, String> {
+//
+//            @Override
+//            protected void onPreExecute() {
+//                super.onPreExecute();
+//            }
+//
+//
+//            @Override
+//            protected void onPostExecute(String s) {
+//                super.onPostExecute(s);
+//                Log.e("String", s);
+//                //Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+//                try {
+//
+//                    recId= storeRecords(s);
+//                    Log.e("message id ", recId);
+//
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @Override
+//            protected String doInBackground(Void... voids) {
+//                try {
+//
+//                    URL url = new URL(urlWebService+ ("?username=" + MainActivity.username)+("&uId="+MainActivity.uId));
+//                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+//                    StringBuilder sb = new StringBuilder();
+//                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+//                    String json;
+//                    while ((json = bufferedReader.readLine()) != null) {
+//                        sb.append(json + "\n");
+//                    }
+//                    return sb.toString().trim();
+//                } catch (Exception e) {
+//                    return null;
+//                }
+//            }
+//        }
+//        GetJSON getJSON = new GetJSON();
+//        getJSON.execute();
+//    }
+//
+//    private String storeRecords(String json) throws JSONException {
+//        JSONArray jsonArray = new JSONArray(json);
+//        records = new String[jsonArray.length()];
+//        for (int i = 0; i < jsonArray.length(); i++) {
+//            JSONObject obj = jsonArray.getJSONObject(i);
+//            // recordID.add(""+obj.getString("recId"));
+//            records[i] = obj.getString("recId");
+//        }
+//        Log.e("Record ID", records[records.length-1]);
+//        return records[records.length-1];
+//    }
 
     public void checkPermission(){
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
@@ -298,6 +325,7 @@ public class PlayActivity extends AppCompatActivity {
                 String device = result.getDevice().getName() + "\n" + result.getDevice().getAddress();
                 deviceAdapter.add(device); //Store device name and address
                 results.add(result); //records found devices as ScanResult
+
             }
 
         }

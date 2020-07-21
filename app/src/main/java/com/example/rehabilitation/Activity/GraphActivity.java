@@ -3,6 +3,8 @@ package com.example.rehabilitation.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -57,6 +59,7 @@ public class GraphActivity extends AppCompatActivity {
 
         this.graphView = (GraphView) findViewById(R.id.graphView);
         this.recID=intent.getStringExtra("recID");
+        Log.e("recID", recID);
         this.btnBack= (Button) findViewById(R.id.btnBack);
         ArrayList<String> listItem = new ArrayList<String>();
         final ArrayList<String> listID = new ArrayList<>();
@@ -64,6 +67,8 @@ public class GraphActivity extends AppCompatActivity {
 
 
         pDialog = new ProgressDialog(this);
+        pDialog = new ProgressDialog(GraphActivity.this,R.style.AppCompatAlertDialogStyle);
+        pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         pDialog.setMessage("Loading record ...");
         pDialog.setIndeterminate(false);
         pDialog.setCancelable(true);
@@ -175,6 +180,9 @@ public class GraphActivity extends AppCompatActivity {
         graphView.getViewport().setScrollableY(true); // enables vertical scrolling
         graphView.getViewport().setScalable(true); // enables horizontal zooming and scrolling
         graphView.getViewport().setScalableY(true); // enables vertical zooming and scrolling
+        graphView.getGridLabelRenderer().setVerticalLabelsColor(Color.WHITE);
+        graphView.getGridLabelRenderer().setHorizontalLabelsColor(Color.WHITE);
+        graphView.getGridLabelRenderer().setGridColor(Color.WHITE);
         try {
             if(valuesArr!=null) {
                 graphView.getViewport().setMinX(convertTime(valuesArr.get(0).getsTime()));
@@ -196,6 +204,7 @@ public class GraphActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             //Date cdate = df2.parse(String.valueOf(valuesArr.get(i).getTime()));
+            Log.e("time", String.valueOf(cDate.getTime()));
             series.appendData(new DataPoint(cDate.getTime(), Double.valueOf(valuesArr.get(i).getValue())),true,valuesArr.size());
 
         }

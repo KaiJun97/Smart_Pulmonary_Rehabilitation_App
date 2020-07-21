@@ -1,4 +1,4 @@
-package com.example.rehabilitation.Game;
+package com.example.rehabilitation.Flappy;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,6 +16,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.rehabilitation.Activity.MainActivity;
+import com.example.rehabilitation.Activity.SelectGameActivity;
 import com.example.rehabilitation.Data.RecordValue;
 import com.example.rehabilitation.R;
 
@@ -58,8 +59,8 @@ public class GameOver extends AppCompatActivity {
 
     public void exit(View view) {
 
-        MainGame.bleGatt.disconnect();
-        MainGame.bleGattService.getBleGatt().close();
+        SelectGameActivity.bleGatt.disconnect();
+        SelectGameActivity.bleGattService.getBleGatt().close();
         /*
          * convert array into json format
          * post json \
@@ -67,9 +68,10 @@ public class GameOver extends AppCompatActivity {
          *
          * */
         array = new JSONArray();
-        for (int i = 0; i < MainGame.valuesArr.size(); i++) {
+        Log.e("Valarr", SelectGameActivity.valuesArr.toString());
+        for (int i = 0; i < SelectGameActivity.valuesArr.size(); i++) {
             JSONObject obj = new JSONObject();
-            RecordValue val = MainGame.valuesArr.get(i);
+            RecordValue val = SelectGameActivity.valuesArr.get(i);
 //                    Log.e("check record id",val.getRecID());
             HashMap<String, String> params = new HashMap<String, String>();
             try {
@@ -106,7 +108,7 @@ public class GameOver extends AppCompatActivity {
         });
 
         queue.add(jobReq);
-
+        SelectGameActivity.valuesArr.clear();
         finish();
     }
 }

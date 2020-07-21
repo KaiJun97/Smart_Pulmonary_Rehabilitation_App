@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.rehabilitation">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -25,6 +26,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:background="@color/backgroundColor"
+
         android:usesCleartextTraffic="true">
         <activity android:name=".Activity.SelectGameActivity"></activity>
         <activity android:name=".Activity.TestActivity" />
@@ -48,23 +51,25 @@
             android:name=".Activity.SignUpActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Game.MainGame"
+            android:name=".Flappy.MainGame"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".Activity.GameActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Game.GameOver"
+            android:name=".Flappy.GameOver"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
+
+        <activity android:name=".Piano.PianoActivity"
+            android:configChanges="orientation|keyboardHidden"
+
+            android:screenOrientation="landscape"
+            tools:ignore="LockedOrientationActivity">
+        </activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"

@@ -14,7 +14,7 @@
  public class MainActivity extends AppCompatActivity {
     //public static String ipBaseAddress = "http://192.168.1.11/asp";
     public static String ipBaseAddress = "http://mprehab.atspace.cc";
-     private TextView txtName;
+     private TextView txtName, txtWelcome;
      private Button btnPlay, btnShowData, btnExportData;
     public static String username;
     public static int uId;
@@ -23,6 +23,7 @@
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         this.txtName= (TextView) findViewById(R.id.txtName);
+        this.txtWelcome= (TextView) findViewById(R.id.txtWelcome);
         this.btnPlay=(Button)findViewById(R.id.btnPlay);
         this.btnShowData=(Button) findViewById(R.id.btnShowData);
         this.btnExportData=(Button) findViewById(R.id.btnExport);

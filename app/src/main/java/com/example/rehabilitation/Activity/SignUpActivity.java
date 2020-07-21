@@ -2,9 +2,13 @@ package com.example.rehabilitation.Activity;
 
 import android.app.ProgressDialog;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -28,6 +32,7 @@ public class SignUpActivity extends AppCompatActivity {
     private Button btnBack, btnSignUp;
     private EditText etusername, etpassword, etpasswordConfirm,etFirstName, etLastName;
     SQLiteDatabase db;
+    private Animation sidetocenter ,btta;
     private static final String url_Signup = MainActivity.ipBaseAddress+"/SignUpJ.php";
     private static final String TAG_SUCCESS = "success";
     private  HashMap<String, String> params;
@@ -37,6 +42,8 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+        this.sidetocenter= AnimationUtils.loadAnimation(this, R.anim.sidetocenter);
+        this.btta= AnimationUtils.loadAnimation(this, R.anim.btta);
         this.btnBack = (Button) findViewById(R.id.btnBack);
         this.btnSignUp = (Button) findViewById(R.id.btnSignUp);
         this.etusername = (EditText) findViewById(R.id.etUsername);
@@ -44,8 +51,13 @@ public class SignUpActivity extends AppCompatActivity {
         this.etpasswordConfirm = (EditText) findViewById(R.id.etPasswordConfirm);
         this.etFirstName=(EditText) findViewById(R.id.etFirstName);
         this.etLastName=(EditText) findViewById(R.id.etLastName);
-
-
+        this.etFirstName.startAnimation(this.sidetocenter);
+        this.etLastName.startAnimation(this.sidetocenter);
+        this.etusername.startAnimation(this.sidetocenter);
+        this.etpassword.startAnimation(this.sidetocenter);
+        this.etpasswordConfirm.startAnimation(this.sidetocenter);
+        this.btnSignUp.startAnimation(this.btta);
+        this.btnBack.startAnimation(this.btta);
 
         this.btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,7 +72,8 @@ public class SignUpActivity extends AppCompatActivity {
                 String username = etusername.getText().toString();
                 String password = etpassword.getText().toString();
                 String passwordConfirm = etpasswordConfirm.getText().toString();
-                pDialog = new ProgressDialog(SignUpActivity.this);
+                pDialog = new ProgressDialog(SignUpActivity.this,R.style.AppCompatAlertDialogStyle);
+                pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 pDialog.setMessage("Signing Up...");
                 pDialog.setIndeterminate(false);
                 pDialog.setCancelable(true);
