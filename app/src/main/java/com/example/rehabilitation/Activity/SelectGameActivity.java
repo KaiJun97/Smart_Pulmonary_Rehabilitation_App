@@ -65,7 +65,7 @@ public class SelectGameActivity extends AppCompatActivity {
         this.btnBird=findViewById(R.id.btnBird);
         this.btnMusic= findViewById(R.id.btnMusic);
         this.bleGattService= PlayActivity.ble;
-        recID= PlayActivity.recId;
+        //recID= PlayActivity.recId;
 
         this.btnBird.setOnClickListener(new View.OnClickListener() {
             @Override

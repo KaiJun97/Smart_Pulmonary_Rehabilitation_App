@@ -58,7 +58,7 @@ public class TestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_test);
         this.bleGattService= PlayActivity.ble;
 //        Intent intent= getIntent();
-        recIDStr= PlayActivity.recId;
+        //recIDStr= PlayActivity.recId;
         this.btnBack= findViewById(R.id.btnBack);
         this.handler= new Handler();
         handler.postDelayed(new Runnable() {
@@ -244,8 +244,8 @@ public class TestActivity extends AppCompatActivity {
                 String s = new String(values, StandardCharsets.UTF_8);
 //                Log.i("recID", recIDStr);
 
-                RecordValue recValues= new RecordValue(String.valueOf(iteration), PlayActivity.recId, String.valueOf(value), sDate);
-                valuesArr.add(recValues);
+//                RecordValue recValues= new RecordValue(String.valueOf(iteration), PlayActivity.recId, String.valueOf(value), sDate);
+//                valuesArr.add(recValues);
                 Log.i("Array size", String.valueOf(valuesArr.size()));
                 iteration++;
 

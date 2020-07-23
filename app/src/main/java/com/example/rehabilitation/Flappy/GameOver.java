@@ -1,5 +1,6 @@
 package com.example.rehabilitation.Flappy;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -58,57 +59,8 @@ public class GameOver extends AppCompatActivity {
     }*/
 
     public void exit(View view) {
+        Intent intent = new Intent(GameOver.this, MainGame.class);
 
-        SelectGameActivity.bleGatt.disconnect();
-        SelectGameActivity.bleGattService.getBleGatt().close();
-        /*
-         * convert array into json format
-         * post json \
-         * sql statement to insert data
-         *
-         * */
-        array = new JSONArray();
-        Log.e("Valarr", SelectGameActivity.valuesArr.toString());
-        for (int i = 0; i < SelectGameActivity.valuesArr.size(); i++) {
-            JSONObject obj = new JSONObject();
-            RecordValue val = SelectGameActivity.valuesArr.get(i);
-//                    Log.e("check record id",val.getRecID());
-            HashMap<String, String> params = new HashMap<String, String>();
-            try {
-                obj.put("indexVal", val.getRecDataID());
-                obj.put("recId", val.getRecID());
-                obj.put("value", val.getValue());
-                obj.put("time", val.getsTime());
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            array.put(obj);
-        }
-//                JSONObject valueObj = new JSONObject();
-//                try {
-//                    valueObj.put("values", array);
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-        Log.e("String", array.toString());
-        //saveData(url_saveRecordedData);
-        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        JsonArrayRequest jobReq = new JsonArrayRequest(Request.Method.POST, url_saveRecordedData, array,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray jsonArray) {
-                        Log.i("----Response", jsonArray + " " + url_saveRecordedData);
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                Log.i("Error", "Error");
-                volleyError.printStackTrace();
-            }
-        });
 
-        queue.add(jobReq);
-        SelectGameActivity.valuesArr.clear();
-        finish();
     }
 }

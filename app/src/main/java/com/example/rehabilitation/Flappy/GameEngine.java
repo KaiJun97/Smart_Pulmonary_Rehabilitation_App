@@ -9,9 +9,22 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.Log;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.rehabilitation.Activity.MainActivity;
 import com.example.rehabilitation.Activity.SelectGameActivity;
+import com.example.rehabilitation.Data.RecordValue;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 import static com.example.rehabilitation.Activity.SelectGameActivity.jump;
@@ -30,6 +43,9 @@ public class GameEngine {
     int jumpinput;
     Paint scorePaint;
     BluetoothGatt bleGatt;
+    private JSONArray array;
+    private static final String url_saveRecordedData = MainActivity.ipBaseAddress + "/test_save_data.php";
+
 
 
     public GameEngine() throws InterruptedException {
@@ -81,6 +97,7 @@ public class GameEngine {
                 SelectGameActivity.bleGatt.close();
                 context.startActivity(intent);
                 ((Activity) context).finish();
+                close();
             } else if (tubes.get(scoringTube).getTubeX() < bird.getX() - AppConstants.getBitmapBank().getTubeWidth()) {
                 score++;
                 scoringTube++;
@@ -144,6 +161,57 @@ public class GameEngine {
             currentFrame = 0;
         }
         bird.setCurrentFrame(currentFrame);
+    }
+
+    public void close(){
+        SelectGameActivity.bleGatt.disconnect();
+        SelectGameActivity.bleGattService.getBleGatt().close();
+        /*
+         * convert array into json format
+         * post json \
+         * sql statement to insert data
+         *
+         * */
+        array = new JSONArray();
+        Log.e("Valarr", SelectGameActivity.valuesArr.toString());
+        for (int i = 0; i < SelectGameActivity.valuesArr.size(); i++) {
+            JSONObject obj = new JSONObject();
+            RecordValue val = SelectGameActivity.valuesArr.get(i);
+//                    Log.e("check record id",val.getRecID());
+            HashMap<String, String> params = new HashMap<String, String>();
+            try {
+                obj.put("indexVal", val.getRecDataID());
+                obj.put("recId", val.getRecID());
+                obj.put("value", val.getValue());
+                obj.put("time", val.getsTime());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            array.put(obj);
+        }
+//                JSONObject valueObj = new JSONObject();
+//                try {
+//                    valueObj.put("values", array);
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+        Log.e("String", array.toString());
+        //saveData(url_saveRecordedData);
+        JsonArrayRequest jobReq = new JsonArrayRequest(Request.Method.POST, url_saveRecordedData, array,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray jsonArray) {
+                        Log.i("----Response", jsonArray + " " + url_saveRecordedData);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.i("Error", "Error");
+                volleyError.printStackTrace();
+            }
+        });
+
+        SelectGameActivity.valuesArr.clear();
     }
 
 }
